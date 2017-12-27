@@ -1,0 +1,15 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+}
+
+body > div {
+    margin: 20px;
+    flex-grow: 1;
+    height: calc(100vh - 40px);
+    background-color: #888;
+}
