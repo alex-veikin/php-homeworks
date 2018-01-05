@@ -36,9 +36,15 @@ echo "<hr>";
 //обозначающую арифметическое действие,
 //которое нужно выполнить со всеми элементами массива
 function math($arrNum, $op) {
+
 	$res = 0;
 
     foreach ($arrNum as $num) {
+	    if (!is_numeric($num)) {
+		    echo "<p>Некорректно введены данные</p>";
+		    return;
+	    }
+
         if (!$res) {
             $res = $num;
             continue;
@@ -57,6 +63,9 @@ function math($arrNum, $op) {
             case "/":
                 $res /= $num;
                 break;
+            default:
+	            echo "<p>Некорректно введен оператор</p>";
+	            return;
         }
     }
 
@@ -77,6 +86,11 @@ function math2($op, ...$args) {
     $res = 0;
 
     foreach ($args as $num) {
+	    if (!is_numeric($num)) {
+		    echo "<p>Некорректно введены данные</p>";
+		    return;
+	    }
+
 	    if (!$res) {
 		    $res = $num;
 		    continue;
@@ -95,6 +109,9 @@ function math2($op, ...$args) {
             case "/":
                 $res /= $num;
                 break;
+	        default:
+		        echo "<p>Некорректно введены данные</p>";
+		        return;
         }
     }
 
