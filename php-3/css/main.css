@@ -53,4 +53,13 @@ form {
     font-size: 18px;
     cursor: pointer; }
 
+.errors {
+  width: 100%; }
+  .errors p.msg {
+    text-align: center;
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    padding: 0; }
+
 /*# sourceMappingURL=main.css.map */

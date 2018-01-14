@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+//var_dump($_SESSION['errors']);
+
+?>
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -19,7 +25,6 @@
 <?php
 
 
-
 ?>
 
 <form action="register.php" method="post">
@@ -27,15 +32,15 @@
 
     <p>
         <label for="first-name">First name: </label>
-        <input id="first-name" type="text" name="first-name" placeholder="first-name">
+        <input id="first-name" type="text" name="first-name" value="<?=$_SESSION['first_name']?>" placeholder="first-name">
     </p>
     <p>
         <label for="last-name">Last name: </label>
-        <input id="last-name" type="text" name="last-name" placeholder="last-name">
+        <input id="last-name" type="text" name="last-name" value="<?=$_SESSION['last_name']?>" placeholder="last-name">
     </p>
     <p>
         <label for="birth">Date of birth: </label>
-        <input id="birth" type="date" name="birth" placeholder="date of birth">
+        <input id="birth" type="date" name="birth" value="<?=$_SESSION['birth']?>" placeholder="date of birth">
     </p>
     <p>
         <label>Gender: </label>
@@ -46,7 +51,7 @@
     </p>
     <p>
         <label for="login">Login: </label>
-        <input id="login" type="text" name="login" placeholder="login">
+        <input id="login" type="text" name="login" value="<?=$_SESSION['login']?>" placeholder="login">
     </p>
     <p>
         <label for="password">Password: </label>
@@ -56,10 +61,15 @@
         <label for="password-confirm">Confirm password: </label>
         <input id="password-confirm" type="password" name="password-confirm" placeholder="confirm password">
     </p>
+    <div class="errors">
+		<?php
+		foreach ($_SESSION['errors'] as $error) {
+			echo "<p class='msg'>$error</p>";
+		}
+        ?>
+    </div>
     <input class="btn" type="submit" name="submit" value="Register">
 </form>
-
-
 
 
 <script src="js/jquery-3.2.1.js"></script>

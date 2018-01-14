@@ -74,3 +74,16 @@ form {
     cursor: pointer;
   }
 }
+
+
+.errors {
+  width: 100%;
+
+  p.msg {
+    text-align: center;
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+}
