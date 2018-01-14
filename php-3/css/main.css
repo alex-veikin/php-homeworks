@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0; }
+
+body {
+  background-color: #b8b3ff;
+  padding: 50px 0 0;
+  font-family: sans-serif, Arial; }
+
+h2 {
+  text-align: center;
+  margin: 10px 0 20px;
+  font-size: 36px;
+  color: #333; }
+
+form {
+  margin: 0 auto;
+  width: 500px;
+  border: 1px solid #333;
+  box-sizing: border-box;
+  color: #333;
+  background-color: #eee;
+  font-size: 18px; }
+  form p {
+    display: flex;
+    margin: 10px; }
+    form p > * {
+      flex-basis: 50%;
+      flex-grow: 1;
+      margin: 0;
+      padding: 5px 10px; }
+    form p label {
+      text-align: right; }
+    form p input {
+      background-color: #eee;
+      border: none;
+      border-bottom: 1px solid #333;
+      font-size: 15px; }
+      form p input::placeholder {
+        font-style: italic; }
+      form p input:focus {
+        border: none;
+        outline-color: #25c13c; }
+  form .btn {
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #25c13c;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer; }
+
+/*# sourceMappingURL=main.css.map */
