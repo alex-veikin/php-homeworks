@@ -76,14 +76,21 @@ form {
 }
 
 
-.errors {
+.message {
   width: 100%;
 
-  p.msg {
-    text-align: center;
-    color: red;
+  p {
     font-size: 14px;
-    margin: 0;
+    margin: 0 20px;
     padding: 0;
+
+    &.error {
+      color: red;
+    }
+
+    &.good {
+      color: green;
+      font-size: 16px;
+    }
   }
 }

@@ -2,10 +2,12 @@
 session_start();
 
 //var_dump($_SESSION['errors']);
+//var_dump($_SESSION);
+//var_dump($_POST);
 
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8"/>
@@ -31,12 +33,12 @@ session_start();
     <h2>Registration</h2>
 
     <p>
-        <label for="first-name">First name: </label>
-        <input id="first-name" type="text" name="first-name" value="<?=$_SESSION['first_name']?>" placeholder="first-name">
+        <label for="first_name">First name: </label>
+        <input id="first_name" type="text" name="first_name" value="<?=$_SESSION['first_name']?>" placeholder="first-name">
     </p>
     <p>
-        <label for="last-name">Last name: </label>
-        <input id="last-name" type="text" name="last-name" value="<?=$_SESSION['last_name']?>" placeholder="last-name">
+        <label for="last_name">Last name: </label>
+        <input id="last_name" type="text" name="last_name" value="<?=$_SESSION['last_name']?>" placeholder="last-name">
     </p>
     <p>
         <label for="birth">Date of birth: </label>
@@ -45,8 +47,8 @@ session_start();
     <p>
         <label>Gender: </label>
         <span>
-            Male: <input type="radio" name="gender" value="male" title="male">
-            Female: <input type="radio" name="gender" value="female" title="female">
+            Male: <input <?=($_SESSION['gender'] == 'male') ? 'checked' : '' ?> type="radio" name="gender" value="male" title="male">
+            Female: <input <?=($_SESSION['gender'] == 'female') ? 'checked' : '' ?> type="radio" name="gender" value="female" title="female">
         </span>
     </p>
     <p>
@@ -58,14 +60,20 @@ session_start();
         <input id="password" type="password" name="password" placeholder="password">
     </p>
     <p>
-        <label for="password-confirm">Confirm password: </label>
-        <input id="password-confirm" type="password" name="password-confirm" placeholder="confirm password">
+        <label for="password_confirm">Confirm password: </label>
+        <input id="password_confirm" type="password" name="password_confirm" placeholder="confirm password">
     </p>
-    <div class="errors">
+    <div class="message">
 		<?php
-		foreach ($_SESSION['errors'] as $error) {
-			echo "<p class='msg'>$error</p>";
-		}
+        if(count($_SESSION['errors'])) { //Если есть ошибки, то выводим их
+            foreach ($_SESSION['errors'] as $error) {
+                echo "<p class='error'>- $error</p>";
+            }
+        } elseif (($_SESSION['good'])) { //Иначе если пришло сообщение об успешной регистрации, то выводим его
+            echo "<p class='good'>" . $_SESSION['good'] . "</p>";
+        }
+
+        session_unset(); //Чистим сессии при обновлении окна
         ?>
     </div>
     <input class="btn" type="submit" name="submit" value="Register">

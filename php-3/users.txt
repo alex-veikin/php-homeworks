@@ -1,0 +1,4 @@
+First name: Alex || Last name: Veikin || Date of birth: 11-10-1985 || Gender: male || Login: alex85 || Password: 123456
+First name: Jane || Last name: Fox || Date of birth: 27-06-1988 || Gender: female || Login: jane88 || Password: 12345678
+First name: Bella || Last name: Swan || Date of birth: 12-03-1990 || Gender: female || Login: bell || Password: 654321
+First name: Nick || Last name: Wild || Date of birth: 25-10-2003 || Gender: male || Login: nick || Password: 123456
