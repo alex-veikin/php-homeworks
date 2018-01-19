@@ -1,0 +1,96 @@
+$textColor: #333;
+$mainColor: #eee;
+
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #b8b3ff;
+  padding: 50px 0 0;
+  font-family: sans-serif, Arial;
+}
+
+h2 {
+  text-align: center;
+  margin: 10px 0 20px;
+  font-size: 36px;
+  color: $textColor;
+}
+
+form {
+  margin: 0 auto;
+  width: 500px;
+  border: 1px solid $textColor;
+  box-sizing: border-box;
+  color: $textColor;
+  background-color: $mainColor;
+  font-size: 18px;
+
+  p {
+    display: flex;
+    margin: 10px;
+
+    > * {
+      flex-basis: 50%;
+      flex-grow: 1;
+      margin: 0;
+      padding: 5px 10px;
+    }
+
+    label {
+      text-align: right;
+    }
+
+    input {
+      background-color: $mainColor;
+      border: none;
+      border-bottom: 1px solid $textColor;
+      font-size: 15px;
+
+      &::placeholder {
+        font-style: italic;
+      }
+
+      &:focus {
+        border: none;
+        outline-color: #25c13c;
+      }
+    }
+  }
+
+  .btn {
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #25c13c;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+
+.message {
+  width: 100%;
+
+  p {
+    font-size: 14px;
+    margin: 0 20px;
+    padding: 0;
+
+    &.error {
+      color: red;
+    }
+
+    &.good {
+      color: green;
+      font-size: 16px;
+    }
+  }
+}

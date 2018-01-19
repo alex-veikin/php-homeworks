@@ -1,0 +1,3 @@
+Login: alex || E-mail: a@tut.by || Password: 1234
+Login: olya || E-mail: olya@mail.ru || Password: 232323
+Login: john || E-mail: john@mail.ru || Password: 123456
