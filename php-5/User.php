@@ -1,6 +1,7 @@
 <?php
 
 class User {
+
 	public $first_name;
 	public $last_name;
 	public $login;
@@ -20,17 +21,35 @@ class User {
 		$this->password_confirm = trim( strip_tags( $password_confirm ) );
 	}
 
-	//Проверка на мин/макс длину
+
+	/**
+	 * Проверка строки на мин/макс длину
+	 * @param $field
+	 * @param $min
+	 * @param $max
+	 *
+	 * @return bool
+	 */
 	private function checkLength( $field, $min, $max ) {
 		return ( mb_strlen( $field ) >= $min ) && ( mb_strlen( $field ) <= $max );
 	}
 
-	//Проверка данных на пробелы
+
+	/**
+	 * Проверка строки на пробелы
+	 * @param $field
+	 *
+	 * @return bool
+	 */
 	private function checkSpace( $field ) {
 		return mb_strpos( trim( $field ), " " ) === false;
 	}
 
-	//Проверка email на уникальность
+
+	/**
+	 * Проверка email на уникальность
+	 * @return bool
+	 */
 	private function checkEmailExists() {
 		//Подключение к базе
 		$db = Db::getConnection();
@@ -45,7 +64,11 @@ class User {
 		return $result->fetchColumn() ? true : false;
 	}
 
-	//Проверка логина на уникальность
+
+	/**
+	 * Проверка логина на уникальность
+	 * @return bool
+	 */
 	private function checkLoginExists() {
 		//Подключение к базе
 		$db = Db::getConnection();
@@ -60,18 +83,20 @@ class User {
 		return $result->fetchColumn() ? true : false;
 	}
 
-	//Проверка пола на допустимое значение
-	private function checkGender() {
-		return $this->gender === "male" || $this->gender === "female";
-	}
 
-	//Проверка пароля на допустимое значение
+	/**
+	 * Проверка пароля на допустимое значение
+	 * @return bool
+	 */
 	private function checkPassword() {
 		return ( preg_match( "/^[\da-zA-Z_]+$/", $this->password ) ) ? true : false;
 	}
 
 
-	//Проверка всех введенных данных в форме
+	/**
+	 * Проверка всех введенных данных в форме
+	 * @return bool
+	 */
 	public function checkForm() {
 		$errors = false;
 
@@ -144,6 +169,11 @@ class User {
 		}
 	}
 
+
+	/**
+	 * Регистрация пользователя, запись в базу данных
+	 * @return bool
+	 */
 	public function registerUser() {
 		// Соединение с БД
 		$db = Db::getConnection();
@@ -162,4 +192,5 @@ class User {
 
 		return $result->execute();
 	}
+
 }

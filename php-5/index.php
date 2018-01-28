@@ -1,6 +1,3 @@
-<?php
-//session_start();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,13 +26,9 @@ spl_autoload_register( function ( $class_name ) {
 	include $class_name . '.php';
 } );
 
-if ( isset( $_POST['submit'] ) ) {
+if ( isset( $_POST['register'] ) ) {
 	$user = new User( $_POST['first_name'], $_POST['last_name'], $_POST['login'],
 		$_POST['email'], $_POST['gender'], $_POST['password'], $_POST['password_confirm'] );
-
-//	echo "<pre>";
-//	var_dump( $user );
-//	echo "</pre>";
 }
 ?>
 
@@ -125,7 +118,7 @@ if ( isset( $_POST['submit'] ) ) {
             </div>
             <div class="form-group col-md-6 row justify-content-center">
                 <div class="col-sm-10">
-                    <button type="submit" name="submit" value="submit" class="btn btn-primary btn-block">Sign up
+                    <button type="submit" name="register" value="submit" class="btn btn-primary btn-block">Sign up
                     </button>
                 </div>
             </div>
