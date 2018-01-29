@@ -2,63 +2,21 @@
 
 class User {
 
-	public $first_name;
-	public $last_name;
-	public $login;
-	public $email;
-	public $gender;
-	private $password;
-	private $password_confirm;
-	public static $errors = false;
-
-	public function __construct( $first_name, $last_name, $login, $email, $gender, $password, $password_confirm ) {
-		$this->first_name       = trim( strip_tags( $first_name ) );
-		$this->last_name        = trim( strip_tags( $last_name ) );
-		$this->login            = trim( strip_tags( $login ) );
-		$this->email            = trim( strip_tags( $email ) );
-		$this->gender           = trim( strip_tags( $gender ) );
-		$this->password         = trim( strip_tags( $password ) );
-		$this->password_confirm = trim( strip_tags( $password_confirm ) );
-	}
-
-
-	/**
-	 * Проверка строки на мин/макс длину
-	 * @param $field
-	 * @param $min
-	 * @param $max
-	 *
-	 * @return bool
-	 */
-	private function checkLength( $field, $min, $max ) {
-		return ( mb_strlen( $field ) >= $min ) && ( mb_strlen( $field ) <= $max );
-	}
-
-
-	/**
-	 * Проверка строки на пробелы
-	 * @param $field
-	 *
-	 * @return bool
-	 */
-	private function checkSpace( $field ) {
-		return mb_strpos( trim( $field ), " " ) === false;
-	}
-
 
 	/**
 	 * Проверка email на уникальность
+	 * @param $email
+	 *
 	 * @return bool
 	 */
-	private function checkEmailExists() {
+	public static function checkEmailExists( $email ) {
 		//Подключение к базе
 		$db = Db::getConnection();
 
-		//Запрос
 		$stmt = 'SELECT COUNT(*) FROM users WHERE email = :email';
 
 		$result = $db->prepare( $stmt );
-		$result->bindParam( ':email', $this->email, PDO::PARAM_STR );
+		$result->bindParam( ':email', $email, PDO::PARAM_STR );
 		$result->execute();
 
 		return $result->fetchColumn() ? true : false;
@@ -67,17 +25,18 @@ class User {
 
 	/**
 	 * Проверка логина на уникальность
+	 * @param $login
+	 *
 	 * @return bool
 	 */
-	private function checkLoginExists() {
+	public static function checkLoginExists( $login ) {
 		//Подключение к базе
 		$db = Db::getConnection();
 
-		//Запрос
 		$stmt = 'SELECT COUNT(*) FROM users WHERE login = :login';
 
 		$result = $db->prepare( $stmt );
-		$result->bindParam( ':login', $this->login, PDO::PARAM_STR );
+		$result->bindParam( ':login', $login, PDO::PARAM_STR );
 		$result->execute();
 
 		return $result->fetchColumn() ? true : false;
@@ -85,112 +44,123 @@ class User {
 
 
 	/**
-	 * Проверка пароля на допустимое значение
+	 * Регистрация пользователя, запись в базу данных
+	 * @param $first_name
+	 * @param $last_name
+	 * @param $login
+	 * @param $email
+	 * @param $gender
+	 * @param $password
+	 *
 	 * @return bool
 	 */
-	private function checkPassword() {
-		return ( preg_match( "/^[\da-zA-Z_]+$/", $this->password ) ) ? true : false;
-	}
+	public static function register( $first_name, $last_name, $login, $email, $gender, $password ) {
+		// Соединение с БД
+		$db = Db::getConnection();
 
+		$stmt = 'INSERT INTO users (first_name, last_name, login, email, gender, password) ' .
+		        'VALUES (:first_name, :last_name, :login, :email, :gender, :password)';
 
-	/**
-	 * Проверка всех введенных данных в форме
-	 * @return bool
-	 */
-	public function checkForm() {
-		$errors = false;
+		$result = $db->prepare( $stmt );
+		$result->bindParam( ':first_name', $first_name, PDO::PARAM_STR );
+		$result->bindParam( ':last_name', $last_name, PDO::PARAM_STR );
+		$result->bindParam( ':login', $login, PDO::PARAM_STR );
+		$result->bindParam( ':email', $email, PDO::PARAM_STR );
+		$result->bindParam( ':gender', $gender, PDO::PARAM_STR );
+		$result->bindParam( ':password', $password, PDO::PARAM_STR );
 
-		// Валидация полей
-		if ( ! $this->first_name || ! $this->last_name || ! $this->login || ! $this->email ||
-		     ! $this->gender || ! $this->password || ! $this->password_confirm ) {
-			$errors[] = "Заполните все поля";
-		}
-
-		if ( $this->first_name ) {
-			if ( ! self::checkLength( $this->first_name, 2, 30 ) ) {
-				$errors[] = 'Имя должно быть от 2 до 30 символов';
-			} elseif ( ! self::checkSpace( $this->first_name ) ) {
-				$errors[] = "Имя не должно содержать пробелы";
-			}
-		}
-
-		if ( $this->last_name ) {
-			if ( ! self::checkLength( $this->last_name, 2, 30 ) ) {
-				$errors[] = 'Фамилия должна быть от 2 до 30 символов';
-			} elseif ( ! self::checkSpace( $this->last_name ) ) {
-				$errors[] = "Фамилия не должна содержать пробелы";
-			}
-		}
-
-		if ( $this->login ) {
-			if ( ! self::checkLength( $this->login, 4, 30 ) ) {
-				$errors[] = 'Логин должен быть от 4 до 30 символов';
-			} elseif ( ! self::checkSpace( $this->login ) ) {
-				$errors[] = "Логин не должен содержать пробелы";
-			} elseif ( self::checkLoginExists() ) {
-				$errors[] = 'Такой логин уже используется';
-			}
-		}
-
-		if ( $this->email ) {
-			if ( ! filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ) {
-				$errors[] = 'Некорректный email';
-			} elseif ( self::checkEmailExists() ) {
-				$errors[] = 'Такой email уже используется';
-			}
-		}
-
-		if ( $this->gender ) {
-			if ( $this->gender !== "male" && $this->gender !== "female" ) {
-				$errors[] = 'Укажите пол';
-			}
-		}
-
-		if ( $this->password ) {
-			if ( ! self::checkLength( $this->password, 6, 20 ) ) {
-				$errors[] = 'Пароль должен быть от 6 до 20 символов';
-			} elseif ( ! self::checkPassword() ) {
-				$errors[] = "Пароль должен состоять из цифр, букв латинского алфавита верхнего и нижнего регистра, и знака _";
-			} else {
-				if ( ! $this->password_confirm ) {
-					$errors[] = "Подтвердите пароль";
-				} elseif ( $this->password_confirm !== $this->password ) {
-					$errors[] = 'Пароли не совпадают';
-				}
-			}
-		}
-
-		if ( $errors === false ) { //Если ошибок нет
-			return true;
-		} else { //Если ошибки есть
-			self::$errors = $errors; //Записываем ошибки в $errors
-
-			return false;
-		}
+		return $result->execute();
 	}
 
 
 	/**
 	 * Регистрация пользователя, запись в базу данных
+	 * @param $id
+	 * @param $first_name
+	 * @param $last_name
+	 *
 	 * @return bool
 	 */
-	public function registerUser() {
+	public static function edit( $id, $first_name, $last_name ) {
 		// Соединение с БД
 		$db = Db::getConnection();
 
-		//Запрос
-		$stmt = 'INSERT INTO users (first_name, last_name, login, email, gender, password) ' .
-		        'VALUES (:first_name, :last_name, :login, :email, :gender, :password)';
+		$stmt = 'UPDATE users SET first_name = :first_name, last_name = :last_name WHERE id = :id';
 
 		$result = $db->prepare( $stmt );
-		$result->bindParam( ':first_name', $this->first_name, PDO::PARAM_STR );
-		$result->bindParam( ':last_name', $this->last_name, PDO::PARAM_STR );
-		$result->bindParam( ':login', $this->login, PDO::PARAM_STR );
-		$result->bindParam( ':email', $this->email, PDO::PARAM_STR );
-		$result->bindParam( ':gender', $this->gender, PDO::PARAM_STR );
-		$result->bindParam( ':password', $this->password, PDO::PARAM_STR );
+		$result->bindParam( ':id', $id, PDO::PARAM_INT );
+		$result->bindParam( ':first_name', $first_name, PDO::PARAM_STR );
+		$result->bindParam( ':last_name', $last_name, PDO::PARAM_STR );
 
 		return $result->execute();
+	}
+
+
+	/**
+	 * Удаление пользователя
+	 * @param $id
+	 *
+	 * @return bool
+	 */
+	public static function delete( $id ) {
+		// Соединение с БД
+		$db = Db::getConnection();
+
+		$stmt = 'DELETE FROM users WHERE id = :id';
+
+		$result = $db->prepare( $stmt );
+		$result->bindParam( ':id', $id, PDO::PARAM_INT );
+
+		return $result->execute();
+	}
+
+
+	/**
+	 * Проверяем существует ли пользователь с заданными $login и $password
+	 * @param string $login
+	 * @param string $password
+	 *
+	 * @return mixed : integer user id or false
+	 */
+	public static function checkUser( $login, $password ) {
+		// Соединение с БД
+		$db = Db::getConnection();
+
+		$stmt = 'SELECT * FROM users WHERE login = :login AND password = :password';
+
+		$result = $db->prepare( $stmt );
+		$result->bindParam( ':login', $login, PDO::PARAM_STR );
+		$result->bindParam( ':password', $password, PDO::PARAM_STR );
+		$result->execute();
+
+		$user = $result->fetch();
+
+		if ( $user ) {
+			// Если запись существует, возвращаем id пользователя
+			return $user['id'];
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Получаем данные пользователя
+	 * @param integer $userId
+	 *
+	 * @return string user name
+	 */
+	public static function getUser( $userId ) {
+		// Соединение с БД
+		$db = Db::getConnection();
+
+		$stmt = 'SELECT * FROM users WHERE id = :id';
+
+		$result = $db->prepare( $stmt );
+		$result->bindParam( ':id', $userId, PDO::PARAM_INT );
+		$result->execute();
+
+		return $result->fetch();
 	}
 
 }
