@@ -3,9 +3,9 @@
 	<div class="container">
 		<?php if ( isset( $_SESSION['user'] ) ) : ?>
 			<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="form-row">
-				<div class="form-group col-md-6 row justify-content-center">
-					<div class="col-sm-10">
-						<button type="submit" name="submit" value="deleteBtn" class="btn btn-primary btn-block">Удалить
+				<div class="form-group justify-content-center">
+					<div class="">
+						<button type="submit" name="submit" value="deleteBtn" class="btn btn-primary btn-block">Удалить ?
 						</button>
 					</div>
 				</div>

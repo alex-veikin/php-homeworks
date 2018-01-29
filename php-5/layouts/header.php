@@ -19,8 +19,9 @@
 </head>
 
 <body>
-<header>
-	<?php if ( isset( $_SESSION['user'] ) ) : ?>
-        <p>Привет, <?= UserController::getUserName($_SESSION['user']); ?></p>
-	<?php endif; ?>
-</header>
+
+<?php if ( isset( $_SESSION['user'] ) ) : ?>
+<div class="row justify-content-center">
+    <p class="h3">Привет, <?= UserController::getUserName( $_SESSION['user'] ); ?></p>
+</div>
+<?php endif; ?>

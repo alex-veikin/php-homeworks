@@ -187,8 +187,11 @@ class UserController {
 	 * @return bool
 	 */
 	public static function actionDelete() {
-		User::delete($_SESSION['user']);
-		unset($_SESSION['user']);
+
+		if ($_POST['submit'] === "deleteBtn") {
+			User::delete($_SESSION['user']);
+			unset($_SESSION['user']);
+		}
 
 		// Подключаем вид
 		require_once( ROOT . '/views/delete.php' );

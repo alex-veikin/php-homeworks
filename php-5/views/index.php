@@ -2,37 +2,37 @@
 
     <div class="container">
 		<?php if ( isset( $_SESSION['user'] ) ) : ?>
-            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="form-row">
-                <div class="form-group col-md-6 row justify-content-center">
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="">
+                <div class="form-group row justify-content-center">
                     <div class="col-sm-10">
-                        <button type="submit" name="submit" value="logout" class="btn btn-primary btn-block">Sign out
+                        <button type="submit" name="submit" value="logout" class="btn btn-primary btn-block">Выйти
                         </button>
                     </div>
                 </div>
-                <div class="form-group col-md-6 row justify-content-center">
+                <div class="form-group row justify-content-center">
                     <div class="col-sm-10">
-                        <button type="submit" name="submit" value="edit" class="btn btn-primary btn-block">Edit user
+                        <button type="submit" name="submit" value="edit" class="btn btn-primary btn-block">Изменить данные
                         </button>
                     </div>
                 </div>
-                <div class="form-group col-md-6 row justify-content-center">
+                <div class="form-group row justify-content-center">
                     <div class="col-sm-10">
-                        <button type="submit" name="submit" value="delete" class="btn btn-primary btn-block">Delete my account
+                        <button type="submit" name="submit" value="delete" class="btn btn-primary btn-block">Удалить аккаунт
                         </button>
                     </div>
                 </div>
             </form>
 		<?php else : ?>
-            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="form-row">
-                <div class="form-group col-md-6 row justify-content-center">
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" class="">
+                <div class="form-group row justify-content-center">
                     <div class="col-sm-10">
-                        <button type="submit" name="submit" value="auth" class="btn btn-primary btn-block">Sign in
+                        <button type="submit" name="submit" value="auth" class="btn btn-primary btn-block">Авторизация
                         </button>
                     </div>
                 </div>
-                <div class="form-group col-md-6 row justify-content-center">
+                <div class="form-group row justify-content-center">
                     <div class="col-sm-10">
-                        <button type="submit" name="submit" value="register" class="btn btn-primary btn-block">Register
+                        <button type="submit" name="submit" value="register" class="btn btn-primary btn-block">Регистрация
                         </button>
                     </div>
                 </div>

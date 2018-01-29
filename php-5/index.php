@@ -17,6 +17,6 @@ if (!isset($_POST['submit']) || $_POST['submit'] === "home") {
 	UserController::actionRegister();
 } elseif ($_POST['submit'] === "edit" || $_POST['submit'] === "editBtn") {
 	UserController::actionEdit();
-} elseif ($_POST['submit'] === "delete") {
+} elseif ($_POST['submit'] === "delete" || $_POST['submit'] === "deleteBtn") {
 	UserController::actionDelete();
 }
